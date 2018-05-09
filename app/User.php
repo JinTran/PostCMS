@@ -30,4 +30,21 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role');
     }
+
+    public function photo(){
+        return $this->belongsTo('App\Photo');
+    }
+
+//    public function setPasswordAttribute($password){
+//        if(!empty($password)){
+//            $this->attributes['password']= \Hash::make($password);
+//        }
+//    }
+
+    public function isAdmin(){
+        if($this->role->name =='Administrator' && $this->is_active == 1){
+            return true;
+        }
+        return false;
+    }
 }

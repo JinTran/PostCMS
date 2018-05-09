@@ -13,7 +13,7 @@ class UsersRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class UsersRequest extends FormRequest
             'name'=>'required',
             'password'=>'required',
             'email'=>'required',
-            'role'=>'required',
+            'role_id'=>'required',
             'is_active'=>'required'
         ];
     }
