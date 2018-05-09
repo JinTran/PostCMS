@@ -2,6 +2,10 @@
 
 
 @section('content')
+
+    @if(Session::has('deleted_user'))
+        <p class="bg-danger"> The User has been deleted</p>
+    @endif
     <h1>Users</h1>
 
     <table class="table">

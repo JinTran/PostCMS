@@ -37,12 +37,14 @@ Route::group(['middleware'=>'admin'],function (){
         'edit'=>'admin.users.edit'
     ]]);
 
+    Route::resource('admin/posts','AdminPostController');
+
 
 });
 
 Route::get('/admin',function (){
     return view('admin.index');
-});
+})->name('admin');
 
 Route::get('/test',function (){
    return view('test.view') ;
