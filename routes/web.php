@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,13 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('admin/users','AdminUserController', ['names'=>[
 
-    'index'=>'admin.users.index',
-    'create'=>'admin.users.create',
-    'store'=>'admin.users.store',
-    'edit'=>'admin.users.edit'
-]]);
 
 Route::group(['middleware'=>'admin'],function (){
 
@@ -37,7 +33,13 @@ Route::group(['middleware'=>'admin'],function (){
         'edit'=>'admin.users.edit'
     ]]);
 
-    Route::resource('admin/posts','AdminPostController');
+    Route::resource('admin/posts','AdminPostsController', ['names'=>[
+
+        'index'=>'admin.posts.index',
+        'create'=>'admin.posts.create',
+        'store'=>'admin.posts.store',
+        'edit'=>'admin.posts.edit'
+    ]] );
 
 
 });
@@ -47,7 +49,7 @@ Route::get('/admin',function (){
 })->name('admin');
 
 Route::get('/test',function (){
-   return view('test.view') ;
+   dd(Auth::user()->role->name);
 });
 //Route::get('/users',function(){
 //    return "hello";

@@ -21,8 +21,8 @@ class AdminUserController extends Controller
     public function index()
     {
         //
-        $users= User::all();
-        return view('admin.users.index',compact('users'));
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -33,38 +33,38 @@ class AdminUserController extends Controller
     public function create()
     {
         //
-        $roles=Role::pluck('name','id')->all();
-        return view('admin.users.create',compact('roles'));
+        $roles = Role::pluck('name', 'id')->all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(UsersRequest $request)
     {
         //
-       // User::create($request ->all());
+        // User::create($request ->all());
 
-        if(trim($request->password ) == ''){
+        if (trim($request->password) == '') {
             $input = $request->except('password');
-        }else{
+        } else {
             $input = $request->all();
 
-            $input['password'] = bcrypt($request ->password);
+            $input['password'] = bcrypt($request->password);
         }
 
 
-
-        if($file = $request->file('photo_id')){
+        if ($file = $request->file('photo_id')) {
             $name = time() . $file->getClientOriginalName();
-            $file ->move('images',$name);
-            $photo = Photo::create(['file'=>$name]);
+            $file->move('images', $name);
+            $photo = Photo::create(['file' => $name]);
 
-            $input['photo_id'] = $photo -> id;
+            $input['photo_id'] = $photo->id;
         }
+
 
         User::create($input);
 
@@ -78,7 +78,7 @@ class AdminUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -90,7 +90,7 @@ class AdminUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -106,25 +106,25 @@ class AdminUserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UsersEditRequest $request, $id)
     {
         //
-        if(trim($request->password ) == ''){
+        if (trim($request->password) == '') {
             $input = $request->except('password');
-        }else{
+        } else {
             $input = $request->all();
 
             $input['password'] = Hash::make($request->password);
         }
 
 
-        $user=User::findOrfail($id);
-        $input= $request->all();
-        if($file=$request->file('photo_id')) {
+        $user = User::findOrfail($id);
+        $input = $request->all();
+        if ($file = $request->file('photo_id')) {
 
             $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
@@ -132,21 +132,23 @@ class AdminUserController extends Controller
             $input['photo_id'] = $photo->id;
         }
         $user->update($input);
-        return redirect('/admin/users');
-;    }
+        return redirect('/admin/users');;
+    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        unlink(public_path() . $user->photo->file );
-        $user -> delete();
-        Session::flash('deleted_user','user has been deleted');
+       if($user->photo) {
+           unlink(public_path() . $user->photo->file);
+       }
+        $user->delete();
+        Session::flash('deleted_user', 'user has been deleted');
         return redirect('/admin/users');
         //
     }
