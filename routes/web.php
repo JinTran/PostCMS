@@ -41,6 +41,14 @@ Route::group(['middleware'=>'admin'],function (){
         'edit'=>'admin.posts.edit'
     ]] );
 
+    Route::resource('admin/categories','AdminCategoriesController', ['names'=>[
+
+        'index'=>'admin.categories.index',
+        'create'=>'admin.categories.create',
+        'store'=>'admin.categories.store',
+        'edit'=>'admin.categories.edit'
+    ]] );
+
 
 });
 
@@ -48,9 +56,4 @@ Route::get('/admin',function (){
     return view('admin.index');
 })->name('admin');
 
-Route::get('/test',function (){
-   dd(Auth::user()->role->name);
-});
-//Route::get('/users',function(){
-//    return "hello";
-//});
+//Route::get('/test','AdminCategoriesController@store');
