@@ -8,7 +8,7 @@
     @endif
     <h1>Users</h1>
 
-    <table class="table">
+        <table class="table">
         <thead>
           <tr>
               <th>Id</th>
@@ -38,13 +38,11 @@
             @endforeach
 
         @endif
-          <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-          </tr>
+
 
         </tbody>
       </table>
 
+
+    {!! $users->render() !!}
     @stop
