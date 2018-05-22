@@ -26,7 +26,7 @@
             <?php $i=0 ;?>
         @if($posts)
             @foreach($posts as $index=>$post)
-                @if(Auth::user()->name == $post->user->name)
+                {{--@if(Auth::user()->name == $post->user->name)--}}
                 <tr>
                     <td>{{$post->id}} </td>
                     <td><?php echo ++$i; ?></td>
@@ -41,7 +41,7 @@
                 </tr>
 
 
-                @endif
+                {{--@endif--}}
             @endforeach
 
 

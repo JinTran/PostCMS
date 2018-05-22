@@ -29,6 +29,9 @@
 
         {!! Form::close() !!}
 
+        <div class="row">
+            @include('includes.form_error')
+        </div>
     </div>
 
     <div class="col-sm-6">
@@ -47,14 +50,12 @@
                 <tbody>
 
 
-
                 @foreach($categories as $category)
 
                     <tr>
                         <td>{{$category->id}}</td>
                         <td><a href="{{route('admin.categories.edit', $category->id)}}">{{$category->name}}</a></td>
                         <td>
-
                             {{$category->parent_id == 0 ? "None":$category->showName($category->parent_id)  }}
                         </td>
                         <td>{{$category->created_at ? $category->created_at->diffForHumans() : 'No date yet'}}</td>
@@ -67,7 +68,9 @@
             </table>
 
         @endif
+        {!! $categories->render() !!}
 
     </div>
+
 
 @stop

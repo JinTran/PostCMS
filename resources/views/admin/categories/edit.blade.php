@@ -31,7 +31,6 @@
         {!! Form::open(['method'=>'DELETE', 'action'=>['AdminCategoriesController@destroy',$categories->id] ]) !!}
 
 
-
         <div class="form-group">
             {!! Form::submit('Delete Category', ['class'=>'btn btn-danger col-sm-6']) !!}
             {{csrf_field()}}
@@ -42,9 +41,26 @@
     </div>
 
     <div class="col-sm-6">
-
-
-
+        @if($categories->posts)
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Owner</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($categories->posts as $post)
+                    <tr>
+                        <td>{{$post->id}}</td>
+                        <td>{{$post->title}}</td>
+                        <td>{{$post->user->name}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
 
 
