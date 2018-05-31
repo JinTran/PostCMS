@@ -69,7 +69,7 @@ Route::group(['middleware'=>'admin'],function (){
         'store'=>'admin.comments.store',
         'edit'=>'admin.comments.edit'
     ]] );
-    Route::resource('admin/comments/replies','CommentRepliesController', ['names'=>[
+    Route::resource('admin/replies','CommentRepliesController', ['names'=>[
 
         'index'=>'admin.comments.replies.index',
         'create'=>'admin.comments.replies.create',
@@ -85,6 +85,10 @@ Route::group(['middleware'=>'admin'],function (){
 //})->name('admin');
 
 Route::get('/post/{id}',['as'=>'home.post','uses'=>'AdminPostsController@post']);
+
+Route::get('/test',['as'=>'home.test','uses'=>'AdminPostsController@posthome']);
+
+Route::post('/search','AdminPostsController@search')->name('home.search');
 
 
 //Route::get('/test','AdminCategoriesController@store');

@@ -132,7 +132,7 @@ class AdminUserController extends Controller
             $input['photo_id'] = $photo->id;
         }
         $user->update($input);
-        return redirect('/admin/users');;
+        return redirect('/admin/users');
     }
 
     /**

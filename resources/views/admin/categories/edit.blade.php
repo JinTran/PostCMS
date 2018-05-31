@@ -63,9 +63,4 @@
         @endif
     </div>
 
-
-
-
-
-
 @stop

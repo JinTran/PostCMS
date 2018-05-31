@@ -45,7 +45,7 @@ class AdminCategoriesController extends Controller
     {
         //
         $request->validate([
-           'name' => 'required',
+            'name' => 'required',
         ]);
 
         Category::create($request->all());
@@ -113,11 +113,15 @@ class AdminCategoriesController extends Controller
 //        }
 
         $category = Category::findOrFail($id);
-        foreach ($category->posts as $post) {
-            $post->category_id = null;
-            $post->update();
-        }
-        $category->delete();
+//        foreach ($category->posts as $post) {
+//            $post->category_id = null;
+//            $post->update();
+//        }
+
+        DB::transaction(function(){
+            Post::where('category_id', '=', $category->id)->update(['category_id' => null]);
+            $category->delete();
+        });
 
         return redirect('/admin/categories');
     }

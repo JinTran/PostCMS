@@ -17,9 +17,9 @@
                         {{Auth::user()->name}} !! You are logged in! <br>
                         @if(Auth::user()->role->name=='Administrator')
                             <a href="{{ route('admin') }}"> Go to Admin Dashboard </a> <br>
-                            <a href="{{  url('/')}}"> Return Home </a>
+                                <a href="{{ route('home.test') }}">Return Home</a>
                         @else
-                            <a href="{{  url('/') }}"> Return Home </a>
+                                <a href="{{ route('home.test') }}">Return Home</a>
                         @endif
                     </div>
                 </div>
