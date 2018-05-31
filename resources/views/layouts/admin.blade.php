@@ -35,7 +35,7 @@
 <div id="wrapper">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -43,7 +43,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Home</a>
+            <a class="navbar-brand" href="{{route('home.test')}}">Home</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -156,6 +156,10 @@
 
                             <li>
                                 <a href="{{route('admin.comments.index')}}">All Comment</a>
+                            </li>
+
+                            <li>
+                                <a href="{{route('admin.comments.replies.index')}}">All Comment_Reply</a>
                             </li>
 
                         </ul>

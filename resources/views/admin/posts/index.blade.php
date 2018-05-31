@@ -18,6 +18,7 @@
             <th>Category_id</th>
             <th>Title</th>
             <th>Body</th>
+            <th>View</th>
             <th>Created</th>
             <th>Updated</th>
         </tr>
@@ -36,6 +37,7 @@
                     <td>{{$post->category ? $post->category->name : 'Uncategory'}} </td>
                     <td><a href="{{route('admin.posts.edit',$post->id)}}">{{$post->title}}</a></td>
                     <td>{{str_limit($post->body,10)}} </td>
+                    <td><a href="{{route('home.post',$post->id)}}">View Post</a></td>
                     <td>{{$post->created_at->diffForHumans()}}</td>
                     <td>{{$post->updated_at->diffForHumans()}}</td>
                 </tr>

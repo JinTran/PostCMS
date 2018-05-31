@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
+use App\CommentReply;
 use App\Http\Requests\PostsCreateRequest;
 use App\Photo;
 use App\Post;
@@ -105,12 +107,12 @@ class AdminPostsController extends Controller
 //        $user = User::findOrFail($id);
         $input = $request->all();
         if ($file = $request->file('photo')) {
-            $name = time(). $file->getClientOriginalName();
+            $name = time() . $file->getClientOriginalName();
             $file->move('images', $name);
             $photo = Photo::create(['file' => $name]);
-            $input['photo_id']= $photo->id;
+            $input['photo_id'] = $photo->id;
         }
-            //dd($input);
+        //dd($input);
         Auth::user()->posts()->whereId($id)->first()->update($input);
 
         return redirect('/admin/posts');
@@ -127,24 +129,41 @@ class AdminPostsController extends Controller
     public function destroy($id)
     {
         //
-        $post=Post::findOrFail($id);
-        if($post->photo){
+        $post = Post::findOrFail($id);
+        if ($post->photo) {
             unlink(public_path() . $post->photo->file);
         }
 //        $post->photo->delete();
         $post->delete();
-       Session::flash('deleted_post', 'post has been deleted');
+        Session::flash('deleted_post', 'post has been deleted');
         return redirect('/admin/posts');
 
     }
 
-    public function post($id){
-
-
+    public function post($id)
+    {
+        $replies = CommentReply::all();
+        $comments = Comment::all();
         $categories = Category::all();
         $post = Post::findOrFail($id);
 
-        return view('post',compact('post','categories'));
+        return view('post', compact('post', 'categories', 'comments', 'replies'));
+    }
+
+    public function posthome()
+    {
+
+        $categories = Category::all();
+        $posts = Post::paginate(5);
+
+        return view('test', compact('posts', 'categories'));
+    }
+
+    public function search(Request $request){
+        $categories = Category::all();
+        $keyword= $request->get('keyword');
+        $results = Post::where('title', 'like','%'.$keyword.'%')->get();
+        return view('search' ,compact('results','categories'));
     }
 
 
